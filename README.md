@@ -54,24 +54,24 @@ InventarioAPI/
 ### Products
 | Method | Endpoint | Access | Description |
 |--------|----------|--------|-------------|
-| GET | `/api/producto` | Authenticated | Get all products (paginated + filters) |
-| GET | `/api/producto/{id}` | Authenticated | Get product by ID |
-| POST | `/api/producto` | Admin | Create product |
-| PUT | `/api/producto/{id}` | Admin | Update product |
-| DELETE | `/api/producto/{id}` | Admin | Soft delete product |
+| GET | `/api/product` | Authenticated | Get all products (paginated + filters) |
+| GET | `/api/product/{id}` | Authenticated | Get product by ID |
+| POST | `/api/product` | Admin | Create product |
+| PUT | `/api/product/{id}` | Admin | Update product |
+| DELETE | `/api/product/{id}` | Admin | Soft delete product |
 
 ### Categories
 | Method | Endpoint | Access | Description |
 |--------|----------|--------|-------------|
-| GET | `/api/categoria` | Authenticated | Get all categories |
-| GET | `/api/categoria/{id}` | Authenticated | Get category by ID |
-| POST | `/api/categoria` | Admin | Create category |
+| GET | `/api/category` | Authenticated | Get all categories |
+| GET | `/api/category/{id}` | Authenticated | Get category by ID |
+| POST | `/api/category` | Admin | Create category |
 
 ### Inventory Movements
 | Method | Endpoint | Access | Description |
 |--------|----------|--------|-------------|
-| GET | `/api/movimiento` | Admin | Get all movements (paginated) |
-| POST | `/api/movimiento` | Admin | Register stock entry or exit |
+| GET | `/api/movement` | Admin | Get all movements (paginated) |
+| POST | `/api/movement` | Admin | Register stock entry or exit |
 
 ## Product Filters
 ```
@@ -80,13 +80,13 @@ GET /api/producto?pagina=1&tamano=10&buscar=laptop&categoriaId=1&precioMin=100&p
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| pagina | int | Page number (default: 1) |
-| tamano | int | Page size (default: 10, max: 50) |
-| buscar | string | Search by name |
-| categoriaId | int | Filter by category |
-| precioMin | decimal | Minimum price |
-| precioMax | decimal | Maximum price |
-| stockBajo | bool | Show only low stock products |
+| page | int | Page number (default: 1) |
+| size | int | Page size (default: 10, max: 50) |
+| search | string | Search by name |
+| categoryId | int | Filter by category |
+| minPrice | decimal | Minimum price |
+| maxPrice | decimal | Maximum price |
+| lowStock | bool | Show only low stock products |
 
 ## Getting Started
 
@@ -99,7 +99,7 @@ GET /api/producto?pagina=1&tamano=10&buscar=laptop&categoriaId=1&precioMin=100&p
 
 1. Clone the repository
 ```bash
-git clone https://github.com/jaime2804/InventarioAPI.git
+git clone https://github.com/jaime2804/InventoryManagementApi-.git
 cd InventarioAPI
 ```
 
