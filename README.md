@@ -100,7 +100,7 @@ GET /api/producto?pagina=1&tamano=10&buscar=laptop&categoriaId=1&precioMin=100&p
 1. Clone the repository
 ```bash
 git clone https://github.com/jaime2804/InventoryManagementApi-.git
-cd InventarioAPI
+cd InventoryManagementApi-
 ```
 
 2. Create `appsettings.json` based on the example
