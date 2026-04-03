@@ -11,22 +11,22 @@ namespace InventarioAPI.Data
         }
 
 
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Product> Products { get; set; }
 
-        public DbSet<MovimientoInventario> Movimientos {  get; set; }
+        public DbSet<InventoryMovement> InventoryMovements {  get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Producto>().HasOne(p => p.Categoria).WithMany(c => c.Productos).HasForeignKey(p => p.CategoriaId);
+            modelBuilder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryId);
 
-            modelBuilder.Entity<MovimientoInventario>().HasOne(m => m.Usuario).WithMany(u => u.Movimientos).HasForeignKey(m => m.UsuarioId);
+            modelBuilder.Entity<InventoryMovement>().HasOne(m => m.User).WithMany(u => u.Movements).HasForeignKey(m => m.UserId);
 
-            modelBuilder.Entity<MovimientoInventario>().HasOne(m => m.Producto).WithMany(p => p.Movimientos).HasForeignKey( m => m.ProductoId);
+            modelBuilder.Entity<InventoryMovement>().HasOne(m => m.Product).WithMany(p => p.Movements).HasForeignKey( m => m.ProductId);
         }
     }
 }

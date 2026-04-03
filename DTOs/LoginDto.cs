@@ -5,12 +5,12 @@ namespace InventarioAPI.DTOs
     public class LoginDto
     {
 
-        [EmailAddress(ErrorMessage = "El email es invalido")]
-        [Required(ErrorMessage = "El email es obligatorio")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "La contraseña es obligatoria")]
-        [MinLength(8, ErrorMessage = "La contraseña tiene que ser de minimo 8 caracteres")]
+        [Required(ErrorMessage = "Password is required")]
+        [MinLength(8, ErrorMessage = "The password must be at least 8 characters long.")]
         public string Password { get; set; }
     }
 }

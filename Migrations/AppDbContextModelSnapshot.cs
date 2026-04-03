@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InventarioAPI.Migrations
+namespace InventoryManagementAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace InventarioAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InventarioAPI.Models.Categoria", b =>
+            modelBuilder.Entity("InventarioAPI.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,26 +30,26 @@ namespace InventarioAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descripcion")
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EstaEliminado")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("FechaEliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.MovimientoInventario", b =>
+            modelBuilder.Entity("InventarioAPI.Models.InventoryMovement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,35 +57,35 @@ namespace InventarioAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Descripcion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Tipo")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Movimientos");
+                    b.ToTable("InventoryMovements");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Producto", b =>
+            modelBuilder.Entity("InventarioAPI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,27 +93,27 @@ namespace InventarioAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoriaId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EstaEliminado")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaEliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Precio")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Stock")
@@ -121,12 +121,12 @@ namespace InventarioAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("CategoryId");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Usuario", b =>
+            modelBuilder.Entity("InventarioAPI.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,14 +134,14 @@ namespace InventarioAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -149,57 +149,57 @@ namespace InventarioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rol")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.MovimientoInventario", b =>
+            modelBuilder.Entity("InventarioAPI.Models.InventoryMovement", b =>
                 {
-                    b.HasOne("InventarioAPI.Models.Producto", "Producto")
-                        .WithMany("Movimientos")
-                        .HasForeignKey("ProductoId")
+                    b.HasOne("InventarioAPI.Models.Product", "Product")
+                        .WithMany("Movements")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("InventarioAPI.Models.Usuario", "Usuario")
-                        .WithMany("Movimientos")
-                        .HasForeignKey("UsuarioId")
+                    b.HasOne("InventarioAPI.Models.User", "User")
+                        .WithMany("Movements")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Producto");
+                    b.Navigation("Product");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Producto", b =>
+            modelBuilder.Entity("InventarioAPI.Models.Product", b =>
                 {
-                    b.HasOne("InventarioAPI.Models.Categoria", "Categoria")
-                        .WithMany("Productos")
-                        .HasForeignKey("CategoriaId")
+                    b.HasOne("InventarioAPI.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categoria");
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Categoria", b =>
+            modelBuilder.Entity("InventarioAPI.Models.Category", b =>
                 {
-                    b.Navigation("Productos");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Producto", b =>
+            modelBuilder.Entity("InventarioAPI.Models.Product", b =>
                 {
-                    b.Navigation("Movimientos");
+                    b.Navigation("Movements");
                 });
 
-            modelBuilder.Entity("InventarioAPI.Models.Usuario", b =>
+            modelBuilder.Entity("InventarioAPI.Models.User", b =>
                 {
-                    b.Navigation("Movimientos");
+                    b.Navigation("Movements");
                 });
 #pragma warning restore 612, 618
         }

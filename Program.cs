@@ -27,7 +27,7 @@ c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     Scheme = "Bearer",
     BearerFormat = "JWT",
     In = ParameterLocation.Header,
-    Description = "Escribe: Bearer {tu token}"
+    Description = "Writes: Bearer {Your token}"
 });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -52,9 +52,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ICategoriaService, CategoriaService>();
-builder.Services.AddScoped<IProductoService, ProductoService>();
-builder.Services.AddScoped<IMovimientoService, MovimientosService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IMovementService, MovementService>();
 
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");

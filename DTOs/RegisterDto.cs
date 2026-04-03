@@ -7,18 +7,18 @@ namespace InventarioAPI.DTOs
     {
 
 
-        [Required(ErrorMessage ="El nombre es obligatorio")]
-        [MinLength(3, ErrorMessage ="El nombre tiene que ser de minimo 3 caracteres")]
-        public string Nombre { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        [MinLength(3, ErrorMessage = "Name must be at least 3 characters")]
+        public string Name { get; set; }
 
-        [EmailAddress(ErrorMessage ="El email es invalido")]
-        [Required(ErrorMessage ="El email es obligatorio")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="La contraseña es obligatoria")]
-        [MinLength(8,ErrorMessage ="La contraseña tiene que ser de minimo 8 caracteres")]
+        [Required(ErrorMessage = "Password is required")]
+        [MinLength(8,ErrorMessage = "Password must be at least 8 characters")]
         public string Password { get; set; }
 
-        public RolUsuario Rol { get; set; } = RolUsuario.User;
+        public UserRole Role { get; set; } = UserRole.User;
     }
 }

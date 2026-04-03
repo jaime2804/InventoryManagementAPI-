@@ -1,6 +1,6 @@
 ﻿namespace InventarioAPI.Enums
 {
-    public enum RolUsuario
+    public enum UserRole
     {
 
         User,

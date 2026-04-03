@@ -11,21 +11,21 @@ namespace InventarioAPI.Mappings
         {
 
 
-            CreateMap<Usuario, AuthResponseDto>();
+            CreateMap<User, AuthResponseDto>();
 
-            CreateMap<Categoria, CategoriaDto>();
+            CreateMap<Category, CategoryDto>();
 
-            CreateMap<CategoriaDto, Categoria>();
+            CreateMap<CategoryDto, Category>();
 
-            CreateMap<Producto, ProductoDto>().ForMember(dest => dest.NombreCategoria, opt => opt.MapFrom(src => src.Categoria.Nombre));
+            CreateMap<Product, ProductDto>().ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
 
-            CreateMap<CrearProductoDto, Producto>().ForMember(dest => dest.FechaCreacion, opt => opt.Ignore());
+            CreateMap<CreateProductDto, Product>().ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
 
-            CreateMap<MovimientoInventario, MovimientoDto>().ForMember(dest => dest.NombreUsuario, opt => opt.MapFrom(src => src.Usuario.Nombre))
-                .ForMember(dest => dest.NombreProducto, opt => opt.MapFrom(src => src.Producto.Nombre));
+            CreateMap<InventoryMovement, MovementDto>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name));
         
 
-            CreateMap<CrearMovimientoDto, MovimientoInventario>().ForMember(dest => dest.UsuarioId, opt => opt.Ignore());
+            CreateMap<CreateMovementDto, InventoryMovement>().ForMember(dest => dest.UserId, opt => opt.Ignore());
         }
     }
 }

@@ -30,80 +30,80 @@ namespace InventarioAPI.Services
 
         public async Task<AuthResponseDto> Register( RegisterDto dto )
         {
-            var existeEmail = await _context.Usuarios.AnyAsync(u => u.Email == dto.Email);
-            if (existeEmail)
+            var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email);
+            if (emailExists)
             {
-                _logger.LogWarning("Intento de registro con email ya existente: {Email}", dto.Email);
+                _logger.LogWarning("Registration attempt with already registered email: {Email}", dto.Email);
                 return null;
             }
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-            var usuario = new Usuario
+            var user = new User
             {
-                Nombre = dto.Nombre,
+                Name = dto.Name,
                 Email = dto.Email,
                 PasswordHash = passwordHash,
-                Rol = dto.Rol
+                Role = dto.Role
             };
 
-            _context.Usuarios.Add(usuario);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Nuevo usuario registrado con exito: {Email}", dto.Email);
+            _logger.LogInformation("New user registered successfully: {Email}", dto.Email);
 
-            var token = GenerarToken(usuario);
+            var token = GenerarToken(user);
 
             return new AuthResponseDto
             {
                 Token = token,
-                Nombre = usuario.Nombre,
-                Email = usuario.Email,
-                Rol = usuario.Rol
+                Name  = user.Name,
+                Email = user.Email,
+                Role = user.Role
             };
         }
 
 
         public async Task<AuthResponseDto> Login(LoginDto dto)
         {
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (usuario == null)
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            if (user == null)
             {
-                _logger.LogWarning("Intento de login fallido con email no registrado: {Email}", dto.Email);
+                _logger.LogWarning("Failed login attempt with unregistered email: {Email}", dto.Email);
                 return null;
             }
 
-            var validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, usuario.PasswordHash);
+            var validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
             if (!validPassword)
             {
-                _logger.LogWarning("Intento de login fallido con contraseña incorrecta para email: {Email}", dto.Email);
+                _logger.LogWarning("Failed login attempt with incorrect password for email: {Email}", dto.Email);
                 return null;
             }
 
 
-            var token = GenerarToken(usuario);
+            var token = GenerarToken(user);
 
 
             return new AuthResponseDto
             {
                 Token = token,
-                Nombre = usuario.Nombre,
-                Email = usuario.Email,
-                Rol = usuario.Rol
+                Name = user.Name,
+                Email = user.Email,
+                Role = user.Role
             };
         }
 
 
-        private string GenerarToken(Usuario usuario) //Metodo privado que crea el JWT usa la secret key que esta en el appsettings para firmarlo 
+        private string GenerarToken(User user) //Private method that creates the JWT, uses the secret key from appsettings to sign it
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()), //Claims = datos que van dentro del JWT ID, EMAIL, NOMBRE, ROL
-                new Claim(ClaimTypes.Email, usuario.Email),
-                new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim(ClaimTypes.Role, usuario.Rol.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Claims = data inside the JWT: ID, EMAIL, NAME, ROLE
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));

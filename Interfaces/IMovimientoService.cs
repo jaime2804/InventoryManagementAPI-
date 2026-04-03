@@ -2,10 +2,10 @@
 
 namespace InventarioAPI.Interfaces
 {
-    public interface IMovimientoService
+    public interface IMovementService
     {
 
-        Task<ResultadoPaginadoDto<MovimientoDto>> ObtenerMovimientos(PaginacionDto paginacion);
-        Task<MovimientoDto> CrearMovimiento(CrearMovimientoDto dto, int usuarioId);
+        Task<PaginatedResultDto<MovementDto>> GetMovements(PaginationDto pagination);
+        Task<MovementDto> CreateMovement(CreateMovementDto dto, int userId);
     }
 }

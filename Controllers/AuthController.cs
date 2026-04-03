@@ -26,23 +26,23 @@ namespace InventarioAPI.Controllers
                 return BadRequest(ModelState);
 
 
-            var resultado = await _service.Register(dto);
-            if (resultado == null)
-                return BadRequest("El email ya esta registrado");
-            return Ok(resultado);
+            var result = await _service.Register(dto);
+            if (result == null)
+                return BadRequest("Email address is already registered");
+            return Ok(result);
         }
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody]LoginDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var resultado = await _service.Login(dto);
-            if(resultado == null) 
-                return Unauthorized("Credenciales Incorrectas");
-            return Ok(resultado);
+            var result = await _service.Login(dto);
+            if(result == null) 
+                return Unauthorized("Invalid credentials");
+            return Ok(result);
         }
     }
 }
