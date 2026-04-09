@@ -21,7 +21,7 @@ namespace InventarioAPI.Controllers
             _service = service;
         }
 
-        [Authorize]
+    
         [HttpGet]
 
         public async Task<IActionResult> GetProducts([FromQuery] ProductFilterDto filter)
