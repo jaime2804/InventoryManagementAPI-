@@ -121,6 +121,10 @@ namespace InventarioAPI.Services
 
             await _context.SaveChangesAsync();
             _logger.LogInformation("Product updated: {Name} with ID {Id}", product.Name, id);
+
+            var updatedProduct = await _context.Products
+                .Include(p => p.Category)
+                    .FirstOrDefaultAsync(p => p.Id == id);
             return _mapper.Map<ProductDto>(product);
         }
 

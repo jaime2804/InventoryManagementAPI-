@@ -41,7 +41,7 @@ namespace InventarioAPI.Controllers
             return Ok(product);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto dto)
         {
@@ -56,7 +56,7 @@ namespace InventarioAPI.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = newProduct.Id}, newProduct);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] CreateProductDto dto)
         {
@@ -68,7 +68,7 @@ namespace InventarioAPI.Controllers
             return Ok(updatedProduct);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteProduct(int id)
